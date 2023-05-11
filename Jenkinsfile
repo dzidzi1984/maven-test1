@@ -14,6 +14,15 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/dzidzi1984/maven-test1.git'
             }
         }
+        stage(sonarqube scan){
+          steps{
+          withSonarQubeEnv('sonar'){
+          sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=dzidzi1984_geolocation3'
+          }
+            
+  
+          }
+        }
         stage('Code Build') {
             steps {
                 sh 'mvn clean install package'
